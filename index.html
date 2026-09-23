@@ -1,177 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harmonia Instrumentos Musicais</title>
-  <style>
-    /* O CSS básico para substituir o layout visual das antigas tabelas */
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; color: #333; }
-    
-    /* Skip link para acessibilidade (oculto até receber foco) */
-    .skip-link {
-      position: absolute; top: -40px; left: 0; background: #000; color: white; padding: 8px; z-index: 100;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harmonia Instrumentos Musicais</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, "Segoe UI", Arial, sans-serif; color:#1c1c1e; background:#f6f6f8; line-height:1.55; }
+  .wrap { max-width: 1040px; margin: 0 auto; background:#fff; }
+
+  .pular-link { position:absolute; left:-9999px; top:0; background:#1f2a44; color:#fff; padding:10px 16px; z-index:100; border-radius:0 0 6px 0; }
+  .pular-link:focus { left:0; }
+
+  #topo { background:#1f2a44; color:#fff; padding:18px 24px; }
+  .topo-conteudo { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .titulo-principal { font-size: 30px; font-weight: 800; letter-spacing:-.5px; }
+  .subtitulo { color:#b9c4de; font-size:14px; }
+
+  #menu { background:#2c3a5e; padding:10px 24px; }
+  #menu ul { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; }
+  #menu li { margin-right:20px; }
+  #menu a { color:#fff; text-decoration:none; font-size:15px; display:inline-block; padding:4px 0; }
+  #menu a:hover { text-decoration:underline; }
+
+  #trilha { padding:10px 24px; font-size:13px; color:#5b6478; background:#eef0f5; }
+  #trilha ol { list-style:none; display:flex; flex-wrap:wrap; margin:0; padding:0; }
+  #trilha li:not(:last-child)::after { content:"\00a0\203a\00a0"; }
+  #trilha a { color:#5b6478; }
+
+  #miolo { display:flex; gap:28px; padding:24px; align-items:flex-start; }
+  #conteudo { flex:1 1 auto; min-width:0; }
+
+  .lateral { flex:0 0 250px; background:#f2f4f9; border:1px solid #e0e4ee; padding:16px; border-radius:8px; font-size:14px; }
+  .lateral ul { list-style:none; margin:0; padding:0; }
+  .lateral li { margin-bottom:14px; }
+  .lateral li:last-child { margin-bottom:0; }
+  .aside-titulo { font-weight:700; margin:0 0 8px; font-size:14px; }
+
+  .titulo-pagina { font-size:28px; font-weight:800; margin:0 0 6px; }
+  .titulo-secao { font-size:21px; font-weight:700; margin:26px 0 10px; }
+  .titulo-subsecao { font-size:17px; font-weight:700; margin:26px 0 10px; }
+  .titulo-destaque { font-size:32px; font-weight:700; margin:26px 0 10px; }
+  .titulo-produto { font-size:16px; font-weight:700; margin:0 0 4px; }
+
+  .cartao { border:1px solid #e0e4ee; border-radius:8px; padding:14px; margin:10px 0; }
+  .botao { display:inline-block; background:#c0392b; color:#fff; padding:9px 16px; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px; border:none; font-family:inherit; }
+
+  table { border-collapse: collapse; width:100%; margin:14px 0; font-size:14px; }
+  th, td { border:1px solid #d9dee9; padding:9px 11px; text-align:left; font-weight:400; }
+  .cab { background:#eef0f5; font-weight:700; }
+  caption { text-align:left; font-weight:700; margin-bottom:8px; font-size:15px; }
+
+  .lista-categorias { list-style:none; margin:10px 0; padding:0; }
+  .lista-categorias li { margin:4px 0; }
+
+  fieldset { border:1px solid #c3c9d6; border-radius:6px; padding:12px 14px 14px; margin:0 0 14px; }
+  legend { font-weight:600; padding:0 6px; }
+  .campo-radio, .campo-checkbox { display:block; margin:6px 0; font-weight:400; }
+  .campo-radio input, .campo-checkbox input { margin-right:6px; }
+
+  label { display:block; font-weight:600; margin:14px 0 6px; }
+  input[type=text], input[type=email], input[type=password] { width:100%; padding:9px; border:1px solid #c3c9d6; border-radius:5px; margin-bottom:4px; font-size:14px; }
+  .erro { color:#c0392b; font-size:13px; margin:0 0 12px; }
+  .obrigatorio { color:#c0392b; }
+
+  #rodape { background:#1f2a44; color:#b9c4de; padding:20px 24px; font-size:13px; margin-top:10px; }
+  #rodape a { color:#dbe2f2; }
+  .aviso { background:#fff8e1; border:1px solid #f0dfa8; padding:12px 14px; border-radius:6px; font-size:14px; margin:0 0 8px; }
+    .skip-link{
+        position: absolute;
+        left: 9999px;
+        top: 10px;
     }
-    .skip-link:focus { top: 0; }
-    
-    header { background: #111; color: #fff; padding: 20px; }
-    .header-top { display: flex; justify-content: space-between; align-items: center; }
-    
-    nav ul, .breadcrumbs ol, .categorias ul, .aside-links ul { 
-      list-style: none; padding: 0; margin: 0; 
-    }
-    .menu-principal ul { display: flex; gap: 15px; margin-top: 15px; }
-    .menu-principal a { color: #fff; text-decoration: none; }
-    .breadcrumbs { margin-top: 10px; font-size: 0.9em; }
-    .breadcrumbs ol { display: flex; gap: 5px; }
-    .breadcrumbs a { color: #ccc; }
-    
-    .layout-principal { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
-    main { flex: 3; min-width: 300px; }
-    aside { flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 5px; }
-    
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-    th { background: #eee; }
-    
-    .produto { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
-    button { padding: 10px 15px; background: #0066cc; color: #fff; border: none; cursor: pointer; border-radius: 3px; font-weight: bold;}
-    button:hover { background: #004499; }
-    
-    .form-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: bold; }
-    input, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 3px; }
-    
-    footer { background: #111; color: #ccc; text-align: center; padding: 20px; margin-top: 20px; }
-    footer a { color: #fff; }
-  </style>
+</style>
 </head>
 <body>
 
-  <!-- Link de pulo para leitores de tela e navegação por teclado -->
-  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+<a class="pular-link" href="#conteudo">Pular para o conteúdo principal</a>
 
-  <header>
-    <div class="header-top">
+<div class="wrap">
+
+  <header id="topo">
+    <div class="topo-conteudo">
       <div>
-        <strong>Harmonia Instrumentos Musicais</strong>
-        <div>Tudo para o seu som desde 1998</div>
+        <div class="titulo-principal">Harmonia Instrumentos Musicais</div>
+        <div class="subtitulo">Tudo para o seu som desde 1998</div>
       </div>
-      <div>
-        <a href="carrinho.html" aria-label="Acessar carrinho de compras">
-          <img alt="Ícone de um carrinho de compras" height="34" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2220%22%20r%3D%221.4%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2220%22%20r%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M1.5%202h3l2.7%2012.4a2%202%200%200%200%202%201.6h8.1a2%202%200%200%200%202-1.6L21%206H6%22%2F%3E%3C%2Fsvg%3E" width="34">
-        </a>
-      </div>
+      <a href="carrinho.html"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2220%22%20r%3D%221.4%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2220%22%20r%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M1.5%202h3l2.7%2012.4a2%202%200%200%200%202%201.6h8.1a2%202%200%200%200%202-1.6L21%206H6%22%2F%3E%3C%2Fsvg%3E" width="34" height="34" alt="Ver carrinho de compras"></a>
     </div>
-
-    <!-- Navegação Principal -->
-    <nav class="menu-principal" aria-label="Menu principal">
-      <ul>
-        <li><a href="index.html" aria-current="page">Início</a></li>
-        <li><a href="guitarras.html">Guitarras</a></li>
-        <li><a href="baterias.html">Baterias</a></li>
-        <li><a href="teclados.html">Teclados</a></li>
-        <li><a href="contato.html">Contato</a></li>
-      </ul>
-    </nav>
-
-    <!-- Breadcrumbs -->
-    <nav class="breadcrumbs" aria-label="Trilha de navegação">
-      <ol>
-        <li><a href="index.html">Início</a> &gt; </li>
-        <li><a href="guitarras.html">Guitarras</a> &gt; </li>
-        <li><span aria-current="page">Guitarras Elétricas</span></li>
-      </ol>
-    </nav>
   </header>
 
-  <div class="layout-principal">
-    
-    <!-- Conteúdo Principal -->
-    <main id="conteudo-principal">
+  <nav id="menu" aria-label="Menu principal">
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="guitarras.html">Guitarras</a></li>
+      <li><a href="baterias.html">Baterias</a></li>
+      <li><a href="teclados.html">Teclados</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+  </nav>
 
-      <h1>Loja de Instrumentos</h1>
+  <nav id="trilha" aria-label="Trilha de navegação">
+    <ol>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="guitarras.html">Guitarras</a></li>
+      <li aria-current="page">Guitarras Elétricas</li>
+    </ol>
+  </nav>
+
+  <div id="miolo">
+
+    <main id="conteudo">
+
+      <h1 class="titulo-pagina">Loja de Instrumentos</h1>
 
       <p>
         Bem-vindo à nossa loja. Trabalhamos com <strong>as melhores marcas</strong> do mercado e oferecemos
-        <em>garantia estendida</em> em todos os produtos. Nossa nova <span style="text-decoration: underline;">política de trocas</span> entrou em vigor
+        <em>garantia estendida</em> em todos os produtos. Nossa nova política de trocas entrou em vigor
         neste mês. Para saber mais, <a href="politica.html">leia a política de trocas completa</a>.
       </p>
 
-      <h2>Guitarras</h2>
+      <h2 class="titulo-secao">Guitarras</h2>
 
       <p>
         Confira nossa linha completa de guitarras elétricas e acústicas. Todos os modelos passam por
-        revisão técnica antes do envio. 
-        <a href="catalogo.pdf" target="_blank" aria-label="Veja o catálogo de guitarras em PDF. O link abrirá em uma nova aba.">
-          Veja o catálogo completo em PDF
-        </a>.
+        revisão técnica antes do envio. Veja o catálogo completo em PDF,
+        <a href="catalogo.pdf" target="_blank" rel="noopener noreferrer">abra o catálogo em PDF (abre em nova aba)</a>.
       </p>
 
-      <section>
-        <h3>Guitarras Elétricas</h3>
+      <h3 class="titulo-subsecao">Guitarras Elétricas</h3>
 
-        <article class="produto">
-          <h4>Stratocaster HSS</h4>
-          <p>R$ 4.290,00</p>
-          <button type="button">Adicionar Stratocaster ao carrinho</button>
-        </article>
-
-        <article class="produto">
-          <h4>Les Paul Standard</h4>
-          <p>R$ 7.150,00</p>
-          <button type="button">Adicionar Les Paul ao carrinho</button>
-        </article>
-      </section>
-
-      <h2>Baterias</h2>
-
-      <p>Kits acústicos e eletrônicos para estúdio e palco. <a href="baterias.html">Conheça nossa linha de baterias</a>.</p>
-
-      <section>
-        <h3>Bateria Eletrônica</h3>
-        <p>Modelos com pads de mesh e módulo de sons integrado.</p>
-      </section>
-
-      <h2>Categorias em destaque</h2>
-
-      <div class="categorias">
-        <ul>
-          <li>Guitarras e Baixos</li>
-          <li>Baterias e Percussão</li>
-          <li>Teclados e Sintetizadores</li>
-          <li>Microfones</li>
-          <li>Acessórios</li>
-        </ul>
+      <div class="cartao">
+        <h4 class="titulo-produto">Stratocaster HSS</h4>
+        R$ 4.290,00<br>
+        <button type="button" class="botao" aria-label="Adicionar Stratocaster HSS ao carrinho" onclick="adicionarCarrinho(101)">Adicionar ao carrinho</button>
       </div>
 
-      <h2>Comparativo de modelos</h2>
+      <div class="cartao">
+        <h4 class="titulo-produto">Les Paul Standard</h4>
+        R$ 7.150,00<br>
+        <button type="button" class="botao" aria-label="Adicionar Les Paul Standard ao carrinho" onclick="adicionarCarrinho(102)">Adicionar ao carrinho</button>
+      </div>
+
+      <h2 class="titulo-secao">Baterias</h2>
+
+      <p>Kits acústicos e eletrônicos para estúdio e palco. <a href="baterias.html">Saiba mais sobre kits de bateria</a>.</p>
+
+      <h3 class="titulo-subsecao">Bateria Eletrônica</h3>
+
+      <p>Modelos com pads de mesh e módulo de sons integrado.</p>
+
+      <h2 class="titulo-destaque">Categorias em destaque</h2>
+
+      <ul class="lista-categorias">
+        <li>Guitarras e Baixos</li>
+        <li>Baterias e Percussão</li>
+        <li>Teclados e Sintetizadores</li>
+        <li>Microfones</li>
+        <li>Acessórios</li>
+      </ul>
+
+      <h2 class="titulo-secao">Comparativo de modelos</h2>
 
       <table>
-        <caption>Comparativo de especificações e preços entre os modelos de guitarras</caption>
+        <caption>Comparativo de modelos de guitarras elétricas em estoque</caption>
         <thead>
           <tr>
-            <th scope="col">Modelo</th>
-            <th scope="col">Captadores</th>
-            <th scope="col">Escala</th>
-            <th scope="col">Preço</th>
+            <th scope="col" class="cab">Modelo</th>
+            <th scope="col" class="cab">Captadores</th>
+            <th scope="col" class="cab">Escala</th>
+            <th scope="col" class="cab">Preço</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Stratocaster HSS</th>
+            <th scope="row" class="cab">Stratocaster HSS</th>
             <td>2 single + 1 humbucker</td>
             <td>648 mm</td>
             <td>R$ 4.290,00</td>
           </tr>
           <tr>
-            <th scope="row">Les Paul Standard</th>
+            <th scope="row" class="cab">Les Paul Standard</th>
             <td>2 humbuckers</td>
             <td>628 mm</td>
             <td>R$ 7.150,00</td>
           </tr>
           <tr>
-            <th scope="row">Telecaster Vintage</th>
+            <th scope="row" class="cab">Telecaster Vintage</th>
             <td>2 single coil</td>
             <td>648 mm</td>
             <td>R$ 3.980,00</td>
@@ -179,53 +194,64 @@
         </tbody>
       </table>
 
-      <h2>Fale com um vendedor</h2>
+      <h2 class="titulo-secao">Fale com um vendedor</h2>
 
-      <p>Os campos marcados com <span aria-hidden="true">*</span> (asterisco) são obrigatórios.</p>
+      <p class="aviso">Os campos marcados com <span class="obrigatorio" aria-hidden="true">*</span> são obrigatórios.</p>
 
-      <!-- Formulário semântico e acessível -->
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="nome">Nome completo <span aria-hidden="true">*</span></label>
-          <input type="text" id="nome" name="nome" required aria-required="true">
-        </div>
-        
-        <div class="form-group">
-          <label for="email">E-mail <span aria-hidden="true">*</span></label>
-          <input type="email" id="email" name="email" required aria-required="true">
-        </div>
+      <form action="/enviar" method="post">
 
-        <div class="form-group">
-          <label for="mensagem">Mensagem <span aria-hidden="true">*</span></label>
-          <textarea id="mensagem" name="mensagem" rows="4" required aria-required="true"></textarea>
-        </div>
+        <label for="nome">Nome completo <span class="obrigatorio" aria-hidden="true">*</span> (obrigatório)</label>
+        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
 
-        <button type="submit">Enviar mensagem</button>
+        <label for="email">E-mail <span class="obrigatorio" aria-hidden="true">*</span> (obrigatório)</label>
+        <input type="email" id="email" name="email" placeholder="nome@exemplo.com" required aria-describedby="email-erro" aria-invalid="true">
+        <p id="email-erro" class="erro">Erro: informe um e-mail válido, no formato nome@dominio.com.</p>
+
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Crie uma senha" aria-describedby="senha-erro" aria-invalid="true">
+        <p id="senha-erro" class="erro">Erro: a senha deve ter pelo menos 8 caracteres, com letras e números.</p>
+
+        <fieldset>
+          <legend>Turno preferido para contato <span class="obrigatorio" aria-hidden="true">*</span> (obrigatório)</legend>
+          <label class="campo-radio" for="manha"><input type="radio" name="turno" id="manha" value="manha" required> Manhã</label>
+          <label class="campo-radio" for="tarde"><input type="radio" name="turno" id="tarde" value="tarde" required> Tarde</label>
+          <label class="campo-radio" for="noite"><input type="radio" name="turno" id="noite" value="noite" required> Noite</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Assuntos de interesse</legend>
+          <label class="campo-checkbox" for="i1"><input type="checkbox" name="int" id="i1"> Guitarras</label>
+          <label class="campo-checkbox" for="i2"><input type="checkbox" name="int" id="i2"> Baterias</label>
+          <label class="campo-checkbox" for="i3"><input type="checkbox" name="int" id="i3"> Teclados</label>
+        </fieldset>
+
+        <p><button type="submit" class="botao">Enviar</button></p>
+
       </form>
 
     </main>
 
-    <!-- Barra lateral (Aside) -->
-    <aside>
-      <h2>Conteúdo relacionado</h2>
-      <nav aria-label="Links relacionados" class="aside-links">
-        <ul>
-          <li><a href="afinacao.html">Aprenda a afinar sua guitarra</a></li>
-          <li><a href="manutencao.html">Dicas essenciais sobre manutenção de instrumentos</a></li>
-          <li><a href="blog.html" target="_blank" aria-label="Leia nosso blog. O link abrirá em uma nova aba.">Leia nosso blog</a></li>
-        </ul>
-      </nav>
+    <aside class="lateral">
+      <h2 class="aside-titulo">Conteúdo relacionado</h2>
+      <ul>
+        <li><a href="afinacao.html">Aprenda a afinar sua guitarra</a></li>
+        <li><a href="manutencao.html">Saiba mais sobre manutenção de instrumentos</a></li>
+        <li><a href="blog.html" target="_blank" rel="noopener noreferrer">Leia nosso blog (abre em nova aba)</a></li>
+      </ul>
     </aside>
+
   </div>
 
-  <!-- Rodapé -->
-  <footer>
-    <p>
-      Harmonia Instrumentos Musicais • CNPJ 00.000.000/0001-00 <br>
-      <a href="termos.html">Termos de uso</a> •
-      <a href="privacidade.html">Privacidade</a>
-    </p>
+  <footer id="rodape">
+    Harmonia Instrumentos Musicais &bull; CNPJ 00.000.000/0001-00 &bull;
+    <a href="termos.html">Termos de uso</a> &bull;
+    <a href="privacidade.html">Privacidade</a>
   </footer>
+
+</div>
 
 </body>
 </html>
